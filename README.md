@@ -1,10 +1,10 @@
 # UV Viewer for Unity Editor
 UVViewerWindow는 유니티 에디터에서 메시의 UV를 확인할 수 있는 에디터 윈도우 확장 클래스입니다. 유니티 5.4 버전 이상이 필요합니다.
 
-![](ScreenShot.png)
+![](Screenshot.png)
 
 ## 설치
-Assets/Plugins 폴더를 프로젝트로 복사하면 메뉴바의 Window 항목에 UV Viewer가 추가됩니다. 해당 항목을 실행하면 에디터 윈도우가 생성됩니다.
+[릴리스 페이지](https://github.com/songkyoo/UVViewer/releases)에서 유니티 패키지를 다운로드 받아 임포트하거나 [Assets/Plugins](Assets/Plugins) 폴더를 프로젝트로 복사하면 메뉴바의 Window 항목에 UV Viewer가 추가됩니다. 해당 항목을 실행하면 에디터 윈도우가 생성됩니다.
 
 ## 사용법
 ### 메시 설정
