@@ -50,6 +50,7 @@ namespace Macaron.UVViewer.Editor
         private double _viewScale;
         private bool _viewDrag;
         private bool _viewMoved;
+        private bool _waitingResetView;
 
         private bool _foldoutViewSettings = true;
         private SerializedObject _viewSettingsObject;
@@ -626,8 +627,6 @@ namespace Macaron.UVViewer.Editor
                 evt.Use();
             }
         }
-
-        private bool _waitingResetView;
 
         private void ProcessViewInput(Rect viewRect)
         {
