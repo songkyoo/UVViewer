@@ -15,7 +15,11 @@ namespace Macaron.UVViewer.Editor
         private const string _viewHeightKey = _prefsKeyPrefix + "ViewHeight";
         private const string _foldoutViewSettingsKey = _prefsKeyPrefix + "FoldoutViewSettings";
 
+#if UNITY_2018_2_OR_NEWER
+        private static PropertyInfo _editorScreenPointOffset;
+#else
         private static FieldInfo _editorScreenPointOffset;
+#endif
         private static Material _textureMaterial;
         private static Material _lineMaterial;
         private static Material _vertexMaterial;
@@ -113,9 +117,15 @@ namespace Macaron.UVViewer.Editor
 
             if (_editorScreenPointOffset == null)
             {
+#if UNITY_2018_2_OR_NEWER
+                _editorScreenPointOffset = typeof(GUIUtility).GetProperty(
+                    "s_EditorScreenPointOffset",
+                    BindingFlags.Static | BindingFlags.NonPublic);
+#else
                 _editorScreenPointOffset = typeof(GUIUtility).GetField(
                     "s_EditorScreenPointOffset",
                     BindingFlags.Static | BindingFlags.NonPublic);
+#endif
             }
 
             if (_textureMaterial == null)
@@ -599,6 +609,7 @@ namespace Macaron.UVViewer.Editor
                         _lastViewHeight = _viewHeight;
                     }
 
+                    evt.Use();
                     return;
                 }
 
@@ -615,6 +626,7 @@ namespace Macaron.UVViewer.Editor
                         Repaint();
                     }
 
+                    evt.Use();
                     return;
                 }
             }
