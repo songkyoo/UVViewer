@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEditor;
 using Macaron.UVViewer.Editor.Internal;
 using Macaron.UVViewer.Editor.Internal.ExtensionMethods;
@@ -36,9 +37,9 @@ namespace Macaron.UVViewer.Editor
 
         [SerializeField] private MeshSettings _meshSettings;
         [SerializeField] private UnityEngine.Object _selectedObject;
-        [SerializeField] private Mesh _mesh; // 실행취소 시 뷰 메시 를 재구성해야 하는지 확인하기 위해서 사용한다.
+        [SerializeField] private Mesh _mesh; // 실행취소 시 뷰 메시를 재구성해야 하는지 확인하기 위해서 사용한다.
         [SerializeField] private TextureSettings _textureSettings;
-        [SerializeField] private Texture2D _texture; // 실행취소 시 텍스처 사본을 다시 생성해야하는지 확인하기 위해서 사용한다.
+        [SerializeField] private Texture2D _texture; // 실행취소 시 텍스처 사본을 다시 생성해야 하는지 확인하기 위해서 사용한다.
         [SerializeField] private ViewSettings _viewSettings;
 
         private int _subMeshIndex;
@@ -67,9 +68,9 @@ namespace Macaron.UVViewer.Editor
                 return new Mesh()
                 {
                     hideFlags = HideFlags.DontSave,
-                    #if UNITY_2017_3_OR_NEWER
+#if UNITY_2017_3_OR_NEWER
                     indexFormat = UnityEngine.Rendering.IndexFormat.UInt32
-                    #endif
+#endif
                 };
             };
 
@@ -333,11 +334,9 @@ namespace Macaron.UVViewer.Editor
         {
             get
             {
-                int shaderLevel = SystemInfo.graphicsShaderLevel;
                 return
-                    shaderLevel == 40 ||
-                    shaderLevel == 46 ||
-                    shaderLevel == 50;
+                    SystemInfo.graphicsShaderLevel >= 40 &&
+                    SystemInfo.graphicsDeviceType != GraphicsDeviceType.Metal;
             }
         }
 
@@ -391,9 +390,9 @@ namespace Macaron.UVViewer.Editor
         {
             MeshInfo meshInfo = null;
 
-            #if UNITY_5_5_OR_NEWER
+#if UNITY_5_5_OR_NEWER
             UnityEngine.Profiling.Profiler.BeginSample("UVViewerWindow.SetMeshInfo", this);
-            #endif
+#endif
             try
             {
                 _uvLineMesh.Clear();
@@ -476,9 +475,9 @@ namespace Macaron.UVViewer.Editor
             }
             finally
             {
-                #if UNITY_5_5_OR_NEWER
+#if UNITY_5_5_OR_NEWER
                 UnityEngine.Profiling.Profiler.EndSample();
-                #endif
+#endif
             }
 
             if (_subMeshIndex > meshInfo.SubMeshCount)
