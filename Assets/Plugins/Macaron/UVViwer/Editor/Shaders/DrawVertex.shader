@@ -42,7 +42,7 @@ Shader "Hidden/Macaron/UVViewer/Editor/DrawVertex"
             {
                 appdata_t o;
                 o.vertex = mul(unity_ObjectToWorld, v.vertex);
-                o.color = lerp(float4(0, 0, 0, 1), v.color, _VertexColorRatio) * _Color;
+                o.color = lerp(_Color, v.color, _VertexColorRatio);
                 return o;
             }
 
@@ -133,7 +133,7 @@ Shader "Hidden/Macaron/UVViewer/Editor/DrawVertex"
 
                 v2f o;
                 o.vertex = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
-                o.color = lerp(float4(0, 0, 0, 1), v.color, _VertexColorRatio) * _Color;
+                o.color = lerp(_Color, v.color, _VertexColorRatio);
                 return o;
             }
 
